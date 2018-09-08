@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import * as React from "react";
+import { connect } from "react-redux";
 import { Col, Container, ListGroup, ListGroupItem, Row } from "reactstrap";
-import { createAction } from "redux-act";
 
 interface Iresurse {
   name: string;
@@ -17,9 +17,7 @@ const resurses: Iresurses = [
 ];
 
 class App extends React.Component {
-  public componentDidMount() {
-    const add = () => createAction("add some stuff");
-  }
+  public componentDidMount() {}
 
   public render() {
     return (
@@ -38,4 +36,7 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default connect(
+  null,
+  {}
+)(App);
