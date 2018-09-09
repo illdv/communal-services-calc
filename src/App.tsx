@@ -3,17 +3,14 @@ import * as React from "react";
 import { connect } from "react-redux";
 import { Col, Container, ListGroup, ListGroupItem, Row } from "reactstrap";
 import { fetchingData } from "./action";
-
-// interface Iresurse {
-//   name: string;
-//   price: number;
-// }
-// interface Iresurses extends Array<Iresurse> {}
-
+import CurrentMonth from "./CurrentMonth";
+import { Iresurses } from "./types";
 interface Iprops {
   fetchingData: () => void;
-  resourcesName: any;
-  resourcesPrice: any;
+  resourcesName: string[];
+  resourcesPrice: number[];
+  prevMonth: number[];
+  currentMonth: any;
 }
 
 class App extends React.Component<Iprops> {
@@ -25,19 +22,32 @@ class App extends React.Component<Iprops> {
     return (
       <Container>
         <Row>
-          <Col md="4">
+          <Col md="3">
+            <h4>Ресурсы</h4>
             <ListGroup>
-              {this.props.resourcesName.map((resource: any) => (
+              {this.props.resourcesName.map(resource => (
                 <ListGroupItem key={resource}>{resource}</ListGroupItem>
               ))}
             </ListGroup>
           </Col>
-          <Col md="4">
+          <Col md="3">
+            <h4>Цена за ед.</h4>
             <ListGroup>
-              {this.props.resourcesPrice.map((resource: any) => (
+              {this.props.resourcesPrice.map(resource => (
                 <ListGroupItem key={resource}>{resource}</ListGroupItem>
               ))}
             </ListGroup>
+          </Col>
+          <Col md="3">
+            <h4>Предыдущий месяц</h4>
+            <ListGroup>
+              {this.props.prevMonth.map(resource => (
+                <ListGroupItem key={resource}>{resource}</ListGroupItem>
+              ))}
+            </ListGroup>
+          </Col>
+          <Col md="3">
+            <CurrentMonth currentMonth={this.props.currentMonth} />
           </Col>
         </Row>
       </Container>
@@ -46,9 +56,11 @@ class App extends React.Component<Iprops> {
 }
 
 export default connect(
-  (state: any) => ({
-    resourcesName: state.resources.map((resource: any) => resource.name),
-    resourcesPrice: state.resources.map((resource: any) => resource.price)
+  (state: Iresurses) => ({
+    resourcesName: state.resources.map(resource => resource.name),
+    resourcesPrice: state.resources.map(resource => resource.price),
+    prevMonth: state.resources.map(resource => resource.prevMonth),
+    currentMonth: state.resources.map(resource => resource.currentMonth)
   }),
   { fetchingData }
 )(App);

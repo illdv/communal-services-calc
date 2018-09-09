@@ -1,9 +1,10 @@
-interface Itypes {
+import { Iresurses } from "../types";
+interface IAction {
   type: string;
-  data: any;
+  data: Iresurses[];
 }
 
-export default (state = [], { type, data }: Itypes) => {
+export default (state = [], { type, data }: IAction) => {
   switch (type) {
     case "FETCH_DATA_SUCCESS":
       return [...state, ...data];
