@@ -5,7 +5,7 @@ import getData from "../api";
 function* fetchData() {
   yield takeLatest("FETCH_DATA", function*({ type }) {
     yield put({
-      type: `${type}` + "START"
+      type: `${type}` + "_START"
     });
 
     try {
@@ -13,11 +13,11 @@ function* fetchData() {
 
       yield put({
         data,
-        type: `${type}` + "SUCCESS"
+        type: `${type}` + "_SUCCESS"
       });
     } catch (err) {
       yield put({
-        type: `${type}` + "FAIL"
+        type: `${type}` + "_FAIL"
       });
     }
   });

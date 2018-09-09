@@ -2,22 +2,24 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import * as React from "react";
 import { connect } from "react-redux";
 import { Col, Container, ListGroup, ListGroupItem, Row } from "reactstrap";
+import { fetchingData } from "./action";
 
-interface Iresurse {
-  name: string;
-  price: number;
+// interface Iresurse {
+//   name: string;
+//   price: number;
+// }
+// interface Iresurses extends Array<Iresurse> {}
+
+interface Iprops {
+  fetchingData: () => void;
+  resourcesName: any;
+  resourcesPrice: any;
 }
-interface Iresurses extends Array<Iresurse> {}
 
-const resurses: Iresurses = [
-  { name: "холодная вода", price: 1 },
-  { name: "горячая вода", price: 2 },
-  { name: "газ", price: 3 },
-  { name: "электричество", price: 4 }
-];
-
-class App extends React.Component {
-  public componentDidMount() {}
+class App extends React.Component<Iprops> {
+  public componentDidMount() {
+    this.props.fetchingData();
+  }
 
   public render() {
     return (
@@ -25,8 +27,15 @@ class App extends React.Component {
         <Row>
           <Col md="4">
             <ListGroup>
-              {resurses.map(resurse => (
-                <ListGroupItem key={resurse.name}>{resurse.name}</ListGroupItem>
+              {this.props.resourcesName.map((resource: any) => (
+                <ListGroupItem key={resource}>{resource}</ListGroupItem>
+              ))}
+            </ListGroup>
+          </Col>
+          <Col md="4">
+            <ListGroup>
+              {this.props.resourcesPrice.map((resource: any) => (
+                <ListGroupItem key={resource}>{resource}</ListGroupItem>
               ))}
             </ListGroup>
           </Col>
@@ -37,6 +46,9 @@ class App extends React.Component {
 }
 
 export default connect(
-  null,
-  {}
+  (state: any) => ({
+    resourcesName: state.resources.map((resource: any) => resource.name),
+    resourcesPrice: state.resources.map((resource: any) => resource.price)
+  }),
+  { fetchingData }
 )(App);

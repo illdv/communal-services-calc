@@ -1,12 +1,12 @@
 interface Itypes {
   type: string;
-  payload: number;
+  data: any;
 }
 
-export default (state = {}, { type, payload }: Itypes) => {
+export default (state = [], { type, data }: Itypes) => {
   switch (type) {
-    case "1":
-      return payload;
+    case "FETCH_DATA_SUCCESS":
+      return [...state, ...data];
 
     default:
       return state;
